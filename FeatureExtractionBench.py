@@ -1,34 +1,23 @@
-# Test Bench to compare different feature extraction pipelines
-# COMP 551
-# Boury Mbodj
-# Humayun Khan
-# Michael Segev
-# Feb 14 2019
-import ClassifierDataPrepper
+from ClassifierDataPrepper import ClassifierDataPrepper
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import BernoulliNB
 from sklearn import metrics
 
-dataPath = "./"
-trainingDataPath = dataPath + "train/"
-positiveTrainingDataPath = trainingDataPath + "pos/"
-negativeTrainingDataPath = trainingDataPath + "neg/"
-# testDataPath = dataPath + "test/"
-testDataPath = None
+dataPath = "./stanfordSentimentTreebank/"
 
-print("Opening training and test files...")
-cdp = ClassifierDataPrepper.ClassifierDataPrepper(positiveTrainingDataPath, negativeTrainingDataPath, testDataPath)
+print("Opening files...")
+cdp = ClassifierDataPrepper(dataPath)
 
-print("Preparing data frames...")
-Xl, Yl = cdp.getXYlabeled()
+Xl, Yl = cdp.getXYlabeledBinary()
 
 # Split labelled data into train and validation sets
 X_train, X_validate, Y_train, Y_validate = train_test_split(Xl, Yl, test_size=0.2, random_state=101)
 
 # Building different vectorizers used to parse the text into features
-print("Extracting features from data frames...")
+print("Extracting features from data ...")
 vectBinCount = CountVectorizer(min_df=1, ngram_range=(1, 2), binary=True)
 vectCount = CountVectorizer(min_df=1, ngram_range=(1, 2), binary=False)
 vectTfidf = TfidfVectorizer(min_df=1, ngram_range=(1, 2))
@@ -50,30 +39,30 @@ X_validate_tfidf = vectTfidf.transform(X_validate)
 
 # create and train Logistic Regression model for each type of vectorizer
 print("Training models...")
-logmodel_binCount = LogisticRegression()
-logmodel_binCount.fit(X_train_binCount, Y_train)
+model_binCount = BernoulliNB()  # LogisticRegression()
+model_binCount.fit(X_train_binCount, Y_train)
 
-logmodel_count = LogisticRegression()
-logmodel_count.fit(X_train_count, Y_train)
+model_count = BernoulliNB()  # LogisticRegression()
+model_count.fit(X_train_count, Y_train)
 
-logmodel_tfidf = LogisticRegression()
-logmodel_tfidf.fit(X_train_count, Y_train)
+model_tfidf = BernoulliNB()  # LogisticRegression()
+model_tfidf.fit(X_train_count, Y_train)
 
 # run models on validation set
 print("Running models...")
-predictions_binCount = logmodel_binCount.predict(X_validate_binCount)
-predictions_count = logmodel_count.predict(X_validate_count)
-predictions_tfidf = logmodel_tfidf.predict(X_validate_tfidf)
+predictions_binCount = model_binCount.predict(X_validate_binCount)
+predictions_count = model_count.predict(X_validate_count)
+predictions_tfidf = model_tfidf.predict(X_validate_tfidf)
 
 # print model performance
 accuracy_binCount = metrics.accuracy_score(Y_validate, predictions_binCount)
 accuracy_count = metrics.accuracy_score(Y_validate, predictions_count)
 accuracy_tfidf = metrics.accuracy_score(Y_validate, predictions_tfidf)
 
-print("Logistic Regression Performance using binary counts :")
+print("Naive Bayes Performance using binary counts :")
 print(accuracy_binCount)
-print("Logistic Regression Performance using counts :")
+print("Naive Bayes Performance using counts :")
 print(accuracy_count)
-print("Logistic Regression Performance using TF-IDF :")
+print("Naive Bayes Performance using TF-IDF :")
 print(accuracy_tfidf)
 

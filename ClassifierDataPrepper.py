@@ -1,54 +1,49 @@
-# Class to quickly parse data from folders into pandas dataframes
-# COMP 551
-# Boury Mbodj
-# Humayun Khan
-# Michael Segev
-# Feb 14 2019
-import DataGrabber
-import pandas as pd
+#  prepares data from stanford sentiment tree bank
+
 import re
+import numpy as np
+
 
 class ClassifierDataPrepper:
 
-    # grabs all files from 3 provided folders and reads them into lists
-    def __init__(self, positiveTrainingDataPath, negativeTrainingDataPath, testDataPath):
-        self.dataGrabberPosTrain = None
-        self.dataGrabberNegTrain = None
-        self.dataGrabberTest = None
+    def __init__(self, dataPath):
+        # read the sentences
+        with open(dataPath + "dictionary.txt", encoding='ISO-8859-1') as file:
+            phrases = file.read().splitlines()
+        with open(dataPath + "sentiment_labels.txt", encoding='ISO-8859-1') as file:
+            classes = file.read().splitlines()
+            classes = classes[1:]  # remove first line
 
-        if positiveTrainingDataPath is not None:
-            self.dataGrabberPosTrain = DataGrabber.DataGrabber(positiveTrainingDataPath)
-        if negativeTrainingDataPath is not None:
-            self.dataGrabberNegTrain = DataGrabber.DataGrabber(negativeTrainingDataPath)
+        self.X = {}
+        self.Y = {}
 
-        if testDataPath is not None:
-            self.dataGrabberTest = DataGrabber.DataGrabber(testDataPath)
+        for sample_class in classes:
+            sample_class_split = sample_class.split("|")
+            sampleIdx = int(sample_class_split[0])
+            score = float(sample_class_split[1])
+            self.Y[sampleIdx] = score
 
-        self.trainDf = None
-        self.testDf = None
+        for sample_phrase in phrases:
+            sample_phrase_split = sample_phrase.split("|")
+            sampleIdx = int(sample_phrase_split[1])
+            phrase = sample_phrase_split[0]
+            self.X[sampleIdx] = phrase
 
-        self.getDataFrames()
+        for i in range(3):
+            print(self.X[i])
+            print(self.Y[i])
 
-    # converts review lists into data frames
-    def getDataFrames(self):
-        if self.dataGrabberPosTrain is not None and self.dataGrabberNegTrain is not None:
-            self.trainDf = pd.concat([
-                pd.DataFrame({"review": self.dataGrabberPosTrain.readCommentFiles(), "label": 1}),
-                pd.DataFrame({"review": self.dataGrabberNegTrain.readCommentFiles(), "label": 0}),
-            ],)
-        if self.dataGrabberTest is not None:
-            self.testDf = pd.DataFrame({"review": self.dataGrabberTest.readCommentFiles(), "label": -1})
+    def getXYlabeledBinary(self):
+        Y2Binary = {}
+        for k, v in self.Y.items():
+            if v > 0.5:
+                binClass = 1
+            else:
+                binClass = 0
 
-    # extracts only the training data from dataframes
-    def getXYlabeled(self):
-        Xtrain = self.trainDf.review
-        Ytrain = self.trainDf.label
-        return Xtrain, Ytrain
+            Y2Binary[k] = binClass
 
-    #
-    def getXtest(self):
-        Xtest = self.testDf.review
-        return Xtest
+        return self.X, Y2Binary
 
     def cleanhtml(self, raw_html):
         cleanr = re.compile('<.*?>')
