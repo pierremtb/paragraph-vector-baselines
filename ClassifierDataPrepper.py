@@ -29,10 +29,6 @@ class ClassifierDataPrepper:
             phrase = sample_phrase_split[0]
             self.X[sampleIdx] = phrase
 
-        for i in range(3):
-            print(self.X[i])
-            print(self.Y[i])
-
     def getXYlabeledBinary(self):
         Y2Binary = {}
         for k, v in self.Y.items():
