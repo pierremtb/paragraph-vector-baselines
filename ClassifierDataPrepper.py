@@ -41,6 +41,25 @@ class ClassifierDataPrepper:
 
         return self.X, Y2Binary
 
+    # computes the fine-grained labels
+    def getXYlabeledSplit(self):
+        Y2Split = {}
+        for k, v in self.Y.items():
+            if v <= 0.2:
+                binClass = 0
+            elif v <= 0.4:
+                binClass = 1
+            elif v <= 0.6:
+                binClass = 2
+            elif v <= 0.8:
+                binClass = 3
+            else:
+                binClass = 4
+
+            Y2Split[k] = binClass
+
+        return self.X, Y2Split
+
     def cleanhtml(self, raw_html):
         cleanr = re.compile('<.*?>')
         cleantext = cleanr.sub(' ', raw_html)

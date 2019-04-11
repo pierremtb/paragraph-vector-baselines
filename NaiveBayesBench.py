@@ -11,10 +11,11 @@ dataPath = "./stanfordSentimentTreebank/"
 print("Opening files...")
 cdp = ClassifierDataPrepper(dataPath)
 
-Xl, Yl = cdp.getXYlabeledBinary()
+# Xl, Yl = cdp.getXYlabeledBinary()
+Xl, Y1 = cdp.getXYlabeledSplit()
 
 # Split labelled data into train and validation sets
-X_train, X_validate, Y_train, Y_validate = train_test_split(Xl, Yl, test_size=0.2, random_state=101)
+X_train, X_validate, Y_train, Y_validate = train_test_split(Xl, Y1, test_size=0.2, random_state=99)
 
 # Building different vectorizers used to parse the text into features
 print("Extracting features from data ...")
@@ -39,13 +40,13 @@ X_validate_tfidf = vectTfidf.transform(X_validate)
 
 # create and train Logistic Regression model for each type of vectorizer
 print("Training models...")
-model_binCount = BernoulliNB()  # LogisticRegression()
+model_binCount = BernoulliNB()  # MultinomialNB()
 model_binCount.fit(X_train_binCount, Y_train)
 
-model_count = BernoulliNB()  # LogisticRegression()
+model_count = BernoulliNB()  # MultinomialNB()
 model_count.fit(X_train_count, Y_train)
 
-model_tfidf = BernoulliNB()  # LogisticRegression()
+model_tfidf = BernoulliNB()  # MultinomialNB()
 model_tfidf.fit(X_train_count, Y_train)
 
 # run models on validation set
