@@ -101,7 +101,7 @@ sentence_index	sentence
 100	While McFarlane 's animation lifts the film firmly above the level of other coming-of-age films ... it 's also so jarring that it 's hard to get back into the boys ' story .
 101	If nothing else , this movie introduces a promising , unusual kind of psychological horror .
 102	In a normal screen process , these bromides would be barely enough to sustain an interstitial program on the Discovery Channel .
-103	But in Imax 3-D , the clichÃ©s disappear into the vertiginous perspectives opened up by the photography .
+103	But in Imax 3-D , the cliches disappear into the vertiginous perspectives opened up by the photography .
 104	Writer-director Burger imaginatively fans the embers of a dormant national grief and curiosity that has calcified into chronic cynicism and fear .
 105	... a roller-coaster ride of a movie
 106	I enjoyed Time of Favor while I was watching it , but I was surprised at how quickly it faded from my memory .
@@ -255,7 +255,7 @@ sentence_index	sentence
 254	The kooky yet shadowy vision Clooney sustains throughout is daring , inventive and impressive .
 255	A triumph of art direction over narrative , but what art direction !
 256	Behan himself knew how to spin a tale and one ca n't help but think he 'd appreciate this attempt to turn his life into art .
-257	JirÃ­ Hubac 's script is a gem .
+257	Jiri Hubac 's script is a gem .
 258	His characters are engaging , intimate and the dialogue is realistic and greatly moving .
 259	The scope of the Silberstein family is large and we grow attached to their lives , full of strength , warmth and vitality . .
 260	Moore 's complex and important film is also , believe it or not , immensely entertaining , a David and Goliath story that 's still very much playing itself out .
@@ -270,7 +270,7 @@ sentence_index	sentence
 269	Just what makes us happy , anyway ?
 270	A thoughtful , moving piece that faces difficult issues with honesty and beauty .
 271	One of the greatest romantic comedies of the past decade .
-272	You would n't call The Good Girl a date movie -LRB- an anti-date movie is more like it -RRB- , but when it 's good , it 's good and horrid .
+272	You would n't call The Good Girl a date movie ( an anti-date movie is more like it ) , but when it 's good , it 's good and horrid .
 273	Benefits from a strong performance from Zhao , but it 's Dong Jie 's face you remember at the end .
 274	This is a film brimming with detail and nuance and one that speaks volumes about the ability of the human spirit to find solace in events that could easily crush it forever .
 275	The director , Steven Shainberg , has succeeded by focusing intently on his characters , making them quirky individuals rather than figures of fun .
@@ -291,7 +291,7 @@ sentence_index	sentence
 290	It 's solid and affecting and exactly as thought-provoking as it should be .
 291	This is such a dazzlingly self-assured directorial debut that it 's hard to know what to praise first .
 292	Parker holds true to Wilde 's own vision of a pure comedy with absolutely no meaning , and no desire to be anything but a polished , sophisticated entertainment that is in love with its own cleverness .
-293	MÃ¼nch 's genuine insight makes the film 's occasional overindulgence forgivable .
+293	Munch 's genuine insight makes the film 's occasional overindulgence forgivable .
 294	Thankfully , the film , which skirts that rapidly deteriorating line between fantasy and reality ... takes a tongue-in-cheek attitude even as it pushes the Croc Hunter agenda .
 295	Ultimately , the message of Trouble Every Day seems to be that all sexual desire disrupts life 's stasis .
 296	If you 're like me , a sucker for a good old fashion romance and someone who shamelessly loves to eat , then Mostly Martha offers all the perfect ingredients to more than satisfy your appetite .
