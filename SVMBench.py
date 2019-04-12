@@ -11,12 +11,12 @@ dataPath = "./stanfordSentimentTreebank/"
 print("Opening files...")
 cdp = ClassifierDataPrepper(dataPath)
 
-# x_train, y_train, x_valid, y_valid, x_test, y_test = cdp.getXYlabeledBinary()  # best score is 0.7733031674208145
-x_train, y_train, x_valid, y_valid, x_test, y_test = cdp.getXYlabeledSplit()  # best score is 0.42126696832579186
+x_train, y_train, x_valid, y_valid, x_test, y_test = cdp.getXYlabeledBinary()  # best score is 0.7438692098092643
+# x_train, y_train, x_valid, y_valid, x_test, y_test = cdp.getXYlabeledSplit()  # best score is 0.4032697547683924
 
 # uncomment this to use test set!
-x_valid = x_test
-y_valid = y_test
+# x_valid = x_test
+# y_valid = y_test
 # Split labelled data into train and validation sets
 # X_train, X_validate, Y_train, Y_validate = train_test_split(Xl, Y1, test_size=0.2, random_state=99)
 
@@ -44,16 +44,16 @@ X_validate_tfidf = vectTfidf.transform(x_valid)
 # create and train Logistic Regression model for each type of vectorizer
 print("Training models...")
 # Binary params
-# C = 1.5
-# kernel = "sigmoid"
-# gamma = "scale"
-# decision_shape = "ovr"
-
-# Split params
 C = 1.5
 kernel = "sigmoid"
 gamma = "scale"
-decision_shape = "ovo"
+decision_shape = "ovr"
+
+# Split params
+# C = 1.5
+# kernel = "sigmoid"
+# gamma = "scale"
+# decision_shape = "ovo"
 
 model_binCount = SVC(kernel=kernel, gamma=gamma, C=C, decision_function_shape=decision_shape)
 model_count = SVC(kernel=kernel, gamma=gamma, C=C, decision_function_shape=decision_shape)
