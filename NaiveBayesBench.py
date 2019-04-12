@@ -11,8 +11,8 @@ dataPath = "./stanfordSentimentTreebank/"
 print("Opening files...")
 cdp = ClassifierDataPrepper(dataPath)
 
-# x_train, y_train, x_valid, y_valid, x_test, y_test = cdp.getXYlabeledBinary()  # best score is 0.7823529411764706
-x_train, y_train, x_valid, y_valid, x_test, y_test = cdp.getXYlabeledSplit()  # best score is 0.39547511312217193
+x_train, y_train, x_valid, y_valid, x_test, y_test = cdp.getXYlabeledBinary()  # best score is 0.7823529411764706
+# x_train, y_train, x_valid, y_valid, x_test, y_test = cdp.getXYlabeledSplit()  # best score is 0.39547511312217193
 
 # uncomment this to use test set!
 x_valid = x_test
