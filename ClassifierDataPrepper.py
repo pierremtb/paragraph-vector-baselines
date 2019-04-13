@@ -3,7 +3,6 @@
 import re
 import numpy as np
 
-
 class ClassifierDataPrepper:
 
     def __init__(self, dataPath):
@@ -13,7 +12,8 @@ class ClassifierDataPrepper:
         with open(dataPath + "sentiment_labels.txt") as file:
             classes = file.read().splitlines()
             classes = classes[1:]  # remove first line
-        with open(dataPath + "datasetSentences.txt", encoding="utf-8") as file:
+        with open(dataPath + "datasetSentences.txt", encoding="utf8") as file:
+        # with open(dataPath + "datasetSentencesFixed.txt", encoding="utf8") as file:
             sentences = file.read().splitlines()
             sentences = sentences[1:]  # remove first line
         with open(dataPath + "datasetSplit.txt") as file:
