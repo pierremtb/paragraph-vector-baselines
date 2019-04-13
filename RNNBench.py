@@ -28,22 +28,28 @@ dataPath = "./stanfordSentimentTreebank/"
 print("Opening files...")
 cdp = ClassifierDataPrepper(dataPath)
 
-# X_train, y_train, X_valid, y_valid, X_test, y_test = cdp.getXYlabeledBinary()  # best score is 0.7262443438914026
-X_train, y_train, X_valid, y_valid, X_test, y_test = cdp.getXYlabeledSplit()  # best score is 0.3420814479638009
+isFineGrainedMode = int(input("Binary or Fine Grained?\n\t0 -> Binary\n\t1 -> Fine Grained\n"))
+
+if isFineGrainedMode == 0:
+    print("Binary!")
+    x_train, y_train, x_valid, y_valid, x_test, y_test = cdp.getXYlabeledBinary()
+else:
+    print("Fine Grained!")
+    x_train, y_train, x_valid, y_valid, x_test, y_test = cdp.getXYlabeledSplit()
 
 max_features = 20000
-max_len = 267
+maxlen = 267
 batch_size = 16
 embed_dim = 128
 
 tokenizer = Tokenizer(num_words=max_features)
-tokenizer.fit_on_texts(list(X_train))
+tokenizer.fit_on_texts(list(x_train))
 
-X_train = tokenizer.texts_to_sequences(X_train)
+X_train = tokenizer.texts_to_sequences(x_train)
 X_train = pad_sequences(X_train, maxlen=maxlen)
-X_valid = tokenizer.texts_to_sequences(X_valid)
+X_valid = tokenizer.texts_to_sequences(x_valid)
 X_valid = pad_sequences(X_valid, maxlen=maxlen)
-X_test = tokenizer.texts_to_sequences(X_test)
+X_test = tokenizer.texts_to_sequences(x_test)
 X_test = pad_sequences(X_test, maxlen=maxlen)
 
 y_train = labelArrayToTensor(y_train)
@@ -79,5 +85,10 @@ model.fit(X_train, y_train,
 # Final evaluation of the model
 scores = model.evaluate(X_test, y_test, verbose=0)
 print("Accuracy: {}".format(scores[1]*100))
+
+models = []
+models.append(model)
+accuracies = []
+accuracies.append(scores[1]*100)
 
 saveBestModel(models, accuracies, isFineGrainedMode, "RNN")
