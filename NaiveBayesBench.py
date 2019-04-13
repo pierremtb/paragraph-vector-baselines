@@ -87,6 +87,6 @@ print(accuracy_count)
 print("Naive Bayes Performance using TF-IDF :")
 print(accuracy_tfidf)
 
-saveBestModel(models, accuracies, isFineGrainedMode, "NB")
+saveModel(model_count, isFineGrainedMode, "NB")
 
 print(predictions_count)

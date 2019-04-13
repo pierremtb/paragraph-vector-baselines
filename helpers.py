@@ -22,6 +22,19 @@ def saveBestModel(models, accuracies, isFineGrainedMode, modelTypeString):
         pickle.dump(models[bestModelIdx], open(filename, 'wb'))
 
 
+def saveModel(model, isFineGrainedMode, modelTypeString):
+    savePickle = int(input("Save model to pickle file?\n\t0 -> No\n\t1 -> Yes\n"))
+
+    if savePickle == 1:
+        if isFineGrainedMode:
+            modeString = "fine_grain"
+        else:
+            modeString = "binary"
+
+        filename = "models/{}/{}_model.pckl".format(modeString, modelTypeString)
+        pickle.dump(model, open(filename, 'wb'))
+
+
 def loadModelsFromPickles(isFineGrainedMode):
     path = "models/"
     if isFineGrainedMode == 1:
@@ -33,6 +46,7 @@ def loadModelsFromPickles(isFineGrainedMode):
 
     models = []
     for filename in filenamess:
+        print("Loading {}".format(path+filename))
         loaded_model = pickle.load(open(path+filename, 'rb'))
         models.append(loaded_model)
     return models

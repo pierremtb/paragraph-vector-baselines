@@ -94,4 +94,5 @@ print(accuracy_count)
 print("SVM Performance using TF-IDF :")
 print(accuracy_tfidf)
 
-saveBestModel(models, accuracies, isFineGrainedMode, "SVM")
+# saveBestModel(models, accuracies, isFineGrainedMode, "SVM")
+saveModel(model_count, isFineGrainedMode, "SVM")

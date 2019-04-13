@@ -74,3 +74,6 @@ meta_accuracy = metrics.accuracy_score(y_valid, meta_predictions)
 
 print("Meta Model Accuracy:")
 print(meta_accuracy)
+
+print("Model coefficients:")
+print(metaModel.coef_)

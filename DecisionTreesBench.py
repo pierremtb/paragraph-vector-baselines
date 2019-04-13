@@ -55,4 +55,6 @@ accuracies.append(accuracy)
 print("Performance:")
 print(accuracy)
 
-saveBestModel(models, accuracies, isFineGrainedMode, "DT")
+# saveBestModel(models, accuracies, isFineGrainedMode, "SVM")
+saveModel(model, isFineGrainedMode, "DT")
+
