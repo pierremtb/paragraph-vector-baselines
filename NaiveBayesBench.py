@@ -6,13 +6,21 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import BernoulliNB, MultinomialNB
 from sklearn import metrics
 
+from helpers import *
+
 dataPath = "./stanfordSentimentTreebank/"
 
 print("Opening files...")
 cdp = ClassifierDataPrepper(dataPath)
 
-x_train, y_train, x_valid, y_valid, x_test, y_test = cdp.getXYlabeledBinary()  # best score is 0.7823529411764706
-# x_train, y_train, x_valid, y_valid, x_test, y_test = cdp.getXYlabeledSplit()  # best score is 0.39547511312217193
+isFineGrainedMode = int(input("Binary or Fine Grained?\n\t0 -> Binary\n\t1 -> Fine Grained\n"))
+
+if isFineGrainedMode == 0:
+    print("Binary!")
+    x_train, y_train, x_valid, y_valid, x_test, y_test = cdp.getXYlabeledBinary()
+else:
+    print("Fine Grained!")
+    x_train, y_train, x_valid, y_valid, x_test, y_test = cdp.getXYlabeledSplit()
 
 # uncomment this to use test set!
 x_valid = x_test
@@ -43,13 +51,17 @@ X_validate_tfidf = vectTfidf.transform(x_valid)
 
 # create and train Logistic Regression model for each type of vectorizer
 print("Training models...")
+models = []
 model_binCount = MultinomialNB()
+models.append(model_binCount)
 model_binCount.fit(X_train_binCount, y_train)
 
 model_count = MultinomialNB()
+models.append(model_count)
 model_count.fit(X_train_count, y_train)
 
 model_tfidf = MultinomialNB()
+models.append(model_tfidf)
 model_tfidf.fit(X_train_tfidf, y_train)
 
 # run models on validation set
@@ -59,9 +71,14 @@ predictions_count = model_count.predict(X_validate_count)
 predictions_tfidf = model_tfidf.predict(X_validate_tfidf)
 
 # print model performance
+accuracies = []
 accuracy_binCount = metrics.accuracy_score(y_valid, predictions_binCount)
 accuracy_count = metrics.accuracy_score(y_valid, predictions_count)
 accuracy_tfidf = metrics.accuracy_score(y_valid, predictions_tfidf)
+
+accuracies.append(accuracy_binCount)
+accuracies.append(accuracy_count)
+accuracies.append(accuracy_tfidf)
 
 print("Naive Bayes Performance using binary counts :")
 print(accuracy_binCount)
@@ -70,3 +87,4 @@ print(accuracy_count)
 print("Naive Bayes Performance using TF-IDF :")
 print(accuracy_tfidf)
 
+saveBestModel(models, accuracies, isFineGrainedMode, "NB")

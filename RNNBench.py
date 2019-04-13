@@ -8,6 +8,8 @@ from keras.preprocessing import sequence
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 
+from helpers import *
+
 def labelToArray(label):
   arr = []
   for i in range(5):
@@ -77,3 +79,5 @@ model.fit(X_train, y_train,
 # Final evaluation of the model
 scores = model.evaluate(X_test, y_test, verbose=0)
 print("Accuracy: {}".format(scores[1]*100))
+
+saveBestModel(models, accuracies, isFineGrainedMode, "RNN")

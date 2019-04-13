@@ -1,24 +1,29 @@
 from ClassifierDataPrepper import ClassifierDataPrepper
-import numpy as np
-from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn import metrics
 from sklearn.svm import SVC
+
+from helpers import *
 
 dataPath = "./stanfordSentimentTreebank/"
 
 print("Opening files...")
 cdp = ClassifierDataPrepper(dataPath)
 
-x_train, y_train, x_valid, y_valid, x_test, y_test = cdp.getXYlabeledBinary()  # best score is 0.7438692098092643
-# x_train, y_train, x_valid, y_valid, x_test, y_test = cdp.getXYlabeledSplit()  # best score is 0.4032697547683924
+isFineGrainedMode = int(input("Binary or Fine Grained?\n\t0 -> Binary\n\t1 -> Fine Grained\n"))
+
+if isFineGrainedMode == 0:
+    print("Binary!")
+    x_train, y_train, x_valid, y_valid, x_test, y_test = cdp.getXYlabeledBinary()
+else:
+    print("Fine Grained!")
+    x_train, y_train, x_valid, y_valid, x_test, y_test = cdp.getXYlabeledSplit()
+
 
 # uncomment this to use test set!
-# x_valid = x_test
-# y_valid = y_test
-# Split labelled data into train and validation sets
-# X_train, X_validate, Y_train, Y_validate = train_test_split(Xl, Y1, test_size=0.2, random_state=99)
+x_valid = x_test
+y_valid = y_test
 
 # Building different vectorizers used to parse the text into features
 print("Extracting features from data ...")
@@ -54,10 +59,14 @@ decision_shape = "ovr"
 # kernel = "sigmoid"
 # gamma = "scale"
 # decision_shape = "ovo"
-
+models = []
 model_binCount = SVC(kernel=kernel, gamma=gamma, C=C, decision_function_shape=decision_shape)
 model_count = SVC(kernel=kernel, gamma=gamma, C=C, decision_function_shape=decision_shape)
 model_tfidf = SVC(kernel=kernel, gamma=gamma, C=C, decision_function_shape=decision_shape)
+
+models.append(model_binCount)
+models.append(model_count)
+models.append(model_tfidf)
 
 model_binCount.fit(X_train_binCount, y_train)
 model_count.fit(X_train_count, y_train)
@@ -70,9 +79,13 @@ predictions_count = model_count.predict(X_validate_count)
 predictions_tfidf = model_tfidf.predict(X_validate_tfidf)
 
 # print model performance
+accuracies = []
 accuracy_binCount = metrics.accuracy_score(y_valid, predictions_binCount)
+accuracies.append(accuracy_binCount)
 accuracy_count = metrics.accuracy_score(y_valid, predictions_count)
+accuracies.append(accuracy_count)
 accuracy_tfidf = metrics.accuracy_score(y_valid, predictions_tfidf)
+accuracies.append(accuracy_tfidf)
 
 print("SVM Performance using binary counts :")
 print(accuracy_binCount)
@@ -80,3 +93,5 @@ print("SVM Performance using counts :")
 print(accuracy_count)
 print("SVM Performance using TF-IDF :")
 print(accuracy_tfidf)
+
+saveBestModel(models, accuracies, isFineGrainedMode, "SVM")

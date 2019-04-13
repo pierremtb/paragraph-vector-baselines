@@ -3,13 +3,22 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn import metrics
 from sklearn.ensemble import ExtraTreesClassifier
 
+from helpers import *
+
 dataPath = "./stanfordSentimentTreebank/"
 
 print("Opening files...")
 cdp = ClassifierDataPrepper(dataPath)
 
-# x_train, y_train, x_valid, y_valid, x_test, y_test = cdp.getXYlabeledBinary()  # best score is 0.7588235294117647
-x_train, y_train, x_valid, y_valid, x_test, y_test = cdp.getXYlabeledSplit()
+isFineGrainedMode = int(input("Binary or Fine Grained?\n\t0 -> Binary\n\t1 -> Fine Grained\n"))
+
+if isFineGrainedMode == 0:
+    print("Binary!")
+    x_train, y_train, x_valid, y_valid, x_test, y_test = cdp.getXYlabeledBinary()
+else:
+    print("Fine Grained!")
+    x_train, y_train, x_valid, y_valid, x_test, y_test = cdp.getXYlabeledSplit()
+
 
 # uncomment this to use test set!
 x_valid = x_test
@@ -28,9 +37,10 @@ X_train_count = vectCount.transform(x_train)
 # transform validation data
 X_validate_count = vectCount.transform(x_valid)
 
-# create and train Logistic Regression model for each type of vectorizer
 print("Training model...")
+models = []
 model = ExtraTreesClassifier(n_estimators=500, max_depth=None, min_samples_split=2, random_state=0)
+models.append(model)
 model.fit(X_train_count, y_train)
 
 # run model on validation set
@@ -38,7 +48,11 @@ print("Running models...")
 predictions = model.predict(X_validate_count)
 
 # print model performance
+accuracies = []
 accuracy = metrics.accuracy_score(y_valid, predictions)
+accuracies.append(accuracy)
 
 print("Performance:")
 print(accuracy)
+
+saveBestModel(models, accuracies, isFineGrainedMode, "DT")
