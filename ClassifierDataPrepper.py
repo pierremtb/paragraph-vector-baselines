@@ -1,4 +1,9 @@
-#  prepares data from stanford sentiment tree bank
+# COMP 551 Mini Project 4
+# 2019-04-17
+# Segev, Michael
+# Jacquier, Pierre
+# Han, Zhenze
+# loads and formats data from stanford sentiment tree bank
 
 import re
 import numpy as np

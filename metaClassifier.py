@@ -1,3 +1,11 @@
+# COMP 551 Mini Project 4
+# 2019-04-17
+# Segev, Michael
+# Jacquier, Pierre
+# Han, Zhenze
+# Run this file to train and test/validate stacking ensemble meta-classifier on on Stanford Sentiment Treebank
+# using pre-trained models saved as pickle files
+
 from ClassifierDataPrepper import ClassifierDataPrepper
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer

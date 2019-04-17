@@ -1,3 +1,10 @@
+# COMP 551 Mini Project 4
+# 2019-04-17
+# Segev, Michael
+# Jacquier, Pierre
+# Han, Zhenze
+# Run this file to train and test/validate Recursive Neural Network model on Stanford Sentiment Treebank
+
 from ClassifierDataPrepper import ClassifierDataPrepper
 import numpy as np
 from keras.models import Sequential

@@ -1,3 +1,10 @@
+# COMP 551 Mini Project 4
+# 2019-04-17
+# Segev, Michael
+# Jacquier, Pierre
+# Han, Zhenze
+# Helper functions to save and load models to file once they are trained
+
 import pickle
 from os import listdir
 from os.path import isfile, join
