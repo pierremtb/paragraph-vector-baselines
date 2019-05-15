@@ -1,4 +1,4 @@
-COMP 551 Mini Project 4
+# COMP 551 Mini Project 4
 2019-04-17
 Segev, Michael
 Jacquier, Pierre
@@ -28,9 +28,12 @@ all use common classes to load files and save models to file.
 	meta-classifier on on Stanford Sentiment Treebank using 
 	pre-trained models saved as pickle files.
 
-Library Dependecies:
+## Library Dependecies:
 	re
 	numpy
 	scikit-learn
 	keras
 	tensorflow-gpu
+
+## Copyright
+[MIT license](LICENSE.md)
