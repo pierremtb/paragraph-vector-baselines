@@ -27,6 +27,17 @@ all use common classes to load files and save models to file.
 	Run this file to train and test/validate stacking ensemble 
 	meta-classifier on on Stanford Sentiment Treebank using 
 	pre-trained models saved as pickle files.
+	
+## Original Paper
+```
+@inproceedings{le2014distributed,
+	title={Distributed representations of sentences and documents},
+	author={Le, Quoc and Mikolov, Tomas},
+	booktitle={International conference on machine learning},
+	pages={1188--1196},
+	year={2014}
+}
+```
 
 ## Library Dependecies:
 	re
